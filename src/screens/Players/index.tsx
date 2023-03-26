@@ -8,12 +8,11 @@ import { ListEmpty } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
 import { useRoute } from "@react-navigation/native";
 import { playerAddByGroup } from "@storage/player/playerAddByGroup";
-import { playersGetByGroup } from "@storage/player/playersGetByGroup";
 import { playersGetByGroupAndTeam } from "@storage/player/playersGetByGroupAndTeam";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { AppError } from "@utils/AppError";
-import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, TextInput } from "react-native";
 import { FlatList } from "react-native";
 import { Container, Form, HeaderList, NumberOfPlayers } from "./styles";
 
@@ -24,6 +23,7 @@ type RouteParams = {
 export function Players() {
   const route = useRoute();
   const { group } = route.params as RouteParams;
+  const inputRef = useRef<TextInput>(null);
 
   const [team, setTeam] = useState("Time A");
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
@@ -44,6 +44,10 @@ export function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+
+      inputRef.current?.blur();
+
+      setNewPlayerName("");
       fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
@@ -78,10 +82,13 @@ export function Players() {
 
       <Form>
         <Input
+          inputRef={inputRef}
           onChangeText={setNewPlayerName}
           value={newPlayerName}
           placeholder="Nome da pessoa"
           autoCorrect={false}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon icon="add" onPress={handleAddPlayer} />
       </Form>
