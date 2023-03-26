@@ -11,10 +11,14 @@ import { Container } from "./styles";
 export function Groups() {
   const { navigate } = useNavigation();
 
-  const [groups, setGroups] = useState<string[]>([]);
+  const [groups, setGroups] = useState<string[]>(["Time do farah"]);
 
   function handleNewGroup() {
     navigate("new");
+  }
+
+  function handleViewPlayers(group: string) {
+    navigate("players", { group });
   }
 
   return (
@@ -25,7 +29,9 @@ export function Groups() {
 
       <FlatList
         data={groups}
-        renderItem={({ item }) => <GroupCard title={item} />}
+        renderItem={({ item }) => (
+          <GroupCard title={item} onPress={() => handleViewPlayers(item)} />
+        )}
         keyExtractor={(item) => item}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
         ListEmptyComponent={
