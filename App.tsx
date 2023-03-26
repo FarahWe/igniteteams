@@ -6,7 +6,7 @@ import {
 
 import theme from "@theme/index";
 
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components/native";
 import { Loading } from "@components/Loading";
 import { StatusBar } from "react-native";
 import { Players } from "@screens/Players";
