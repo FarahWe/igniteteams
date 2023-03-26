@@ -18,7 +18,7 @@ export function Groups() {
     navigate("new");
   }
 
-  function handleViewPlayers(group: string) {
+  function handleOpenGroup(group: string) {
     navigate("players", { group });
   }
 
@@ -47,7 +47,7 @@ export function Groups() {
       <FlatList
         data={groups}
         renderItem={({ item }) => (
-          <GroupCard title={item} onPress={() => handleViewPlayers(item)} />
+          <GroupCard title={item} onPress={() => handleOpenGroup(item)} />
         )}
         keyExtractor={(item) => item}
         contentContainerStyle={groups.length === 0 && { flex: 1 }}
