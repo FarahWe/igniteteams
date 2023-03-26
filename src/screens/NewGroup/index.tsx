@@ -6,8 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 import { groupCreate } from "@storage/group/groupCreate";
 import { AppError } from "@utils/AppError";
 import { useState } from "react";
-import { Alert } from "react-native";
-import { Container, Content, Icon } from "./styles";
+import { Platform, ScrollView } from "react-native";
+import { Alert, KeyboardAvoidingView } from "react-native";
+import { Container, Icon } from "./styles";
 
 export function NewGroup() {
   const { navigate } = useNavigation();
@@ -35,22 +36,30 @@ export function NewGroup() {
     <Container>
       <Header showBackButton />
 
-      <Content>
-        <Icon />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={30}
+      >
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+        >
+          <Icon />
 
-        <Highlight
-          title="Nova Turma"
-          subtitle="Crie a turma para adicionar as pessoas"
-        />
+          <Highlight
+            title="Nova Turma"
+            subtitle="Crie a turma para adicionar as pessoas"
+          />
 
-        <Input
-          placeholder="Nome da turma"
-          onChangeText={setGroup}
-          value={group}
-        />
-
+          <Input
+            placeholder="Nome da turma"
+            onChangeText={setGroup}
+            value={group}
+          />
+        </ScrollView>
         <Button title="Criar" style={{ marginTop: 20 }} onPress={handleNew} />
-      </Content>
+      </KeyboardAvoidingView>
     </Container>
   );
 }
