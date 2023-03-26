@@ -6,13 +6,13 @@ import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { ListEmpty } from "@components/ListEmpty";
 import { PlayerCard } from "@components/PlayerCard";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { playerAddByGroup } from "@storage/player/playerAddByGroup";
 import { playersGetByGroup } from "@storage/player/playersGetByGroup";
 import { playersGetByGroupAndTeam } from "@storage/player/playersGetByGroupAndTeam";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { AppError } from "@utils/AppError";
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { FlatList } from "react-native";
 import { Container, Form, HeaderList, NumberOfPlayers } from "./styles";
@@ -44,7 +44,7 @@ export function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
-      const players = await playersGetByGroup(group);
+      fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
         Alert.alert("Nova pessoa", error.message);
@@ -66,7 +66,9 @@ export function Players() {
     }
   }
 
-  useFocusEffect(useCallback(() => {}, []));
+  useEffect(() => {
+    fetchPlayersByTeam();
+  }, [team]);
 
   return (
     <Container>
