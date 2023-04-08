@@ -7,13 +7,13 @@ This application has the purpose to create teams and separete players. Here you 
 - Remove player
 - Remove Group
 
-## Bibliotecas Usadas
+## Libs
 
 - [styled-components](https://styled-components.com/docs/basics#react-native)
 - [react-navigation](https://reactnavigation.org/)
 - [async-storage](https://github.com/react-native-async-storage/async-storage)
 
-# Image of App
+# Banner of App
 
 <img src="https://user-images.githubusercontent.com/82952503/227803876-b85001e8-3b93-4e84-a27f-263d531d8007.png" heigth={100} width={25}/>
 
